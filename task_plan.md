@@ -4,7 +4,7 @@
 Build a native cross-platform app (iOS + macOS, future Windows) where users can browse and enter Gin & Tonic recipes, including per-gin tonic pairings, garnish combinations, volumes, taste profiles, and links to official distillery sites.
 
 ## Current Phase
-Phase 2
+Phase 3
 
 ## Phases
 
@@ -23,12 +23,18 @@ Phase 2
 - Differentiation: macOS-native, curated quality, user-editable personal pairings, interactive pairing matrix
 
 ### Phase 2: Data Model & Architecture Design
-- [ ] Define the core data schema (Gin, Tonic, Garnish, Pairing, Recipe)
-- [ ] Decide on local vs cloud storage strategy
-- [ ] Choose framework/tech stack (SwiftUI + Swift Data / Core Data / CloudKit)
-- [ ] Decide on Windows path (Electron / Flutter / MAUI / SwiftUI on Windows someday)
-- [ ] Design app information architecture (screens, navigation)
-- **Status:** pending
+- [x] Define the core data schema (Gin, Tonic, Garnish, GinTonicPairing, Recipe)
+- [x] Decide on local vs cloud storage strategy (Swift Data + optional CloudKit)
+- [x] Choose framework/tech stack (SwiftUI + Swift Data, iOS 17+ / macOS 14+)
+- [x] Decide on Windows path (Flutter for v2; defer)
+- [x] Design app information architecture (screens, navigation)
+- **Status:** complete
+
+**Key Phase 2 Outputs:**
+- `Docs/DataModel.md` — full Swift Data schema with all entities, enums, JSON seed format
+- `Docs/Architecture.md` — project structure, navigation, data flow, screen inventory
+- Key differentiator confirmed: **Pairing Matrix view** (gin × tonic grid) unique to this app
+- Target: iOS 17 / macOS 14 (Sonoma) for Swift Data + @Observable support
 
 ### Phase 3: Data Seeding Plan
 - [ ] Identify which gins to seed initially (curated list)
@@ -66,8 +72,14 @@ Phase 2
 | Decision | Rationale |
 |----------|-----------|
 | SwiftUI multiplatform for iOS + macOS v1 | Native performance, shared codebase, best iOS/macOS design fidelity |
+| Swift Data over Core Data | Modern @Model macro API; CloudKit-ready; no .xcdatamodel file needed |
+| iOS 17 / macOS 14 minimum | Required for Swift Data + @Observable; covers ~85%+ of active devices in 2026 |
+| @Observable over ObservableObject | Simpler syntax; no @Published boilerplate; better performance |
+| NavigationSplitView (Mac/iPad) + TabView (iPhone) | Adapts correctly to each form factor per Apple HIG |
+| CloudKit deferred to minor update | Reduces v1 complexity; entitlement + TestFlight overhead not worth it at start |
+| Flutter for Windows v2 | Best cross-platform option; shares JSON seed data format with SwiftUI app |
+| Pairing Matrix as key differentiator | No competitor app has an interactive gin × tonic grid; validates the app's unique value |
 | Defer Windows to v2 | SwiftUI does not run on Windows; Flutter or MAUI are viable but add complexity |
-| Phase 1 = research only, no code yet | Need to understand data landscape before designing the schema |
 
 ## Errors Encountered
 | Error | Attempt | Resolution |

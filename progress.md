@@ -30,8 +30,19 @@
 - [x] Identified two direct competitors (GINferno, Ginventory) and differentiation strategy
 - [x] Updated findings.md with full source inventory, garnish taxonomy, differentiation matrix
 
-### Phase 2: Data Model & Architecture (pending)
-- **Status:** pending
+### Phase 2: Data Model & Architecture — COMPLETE (2026-05-24)
+- **Status:** complete
+- Actions taken:
+  - Designed full Swift Data schema: Gin, Tonic, Garnish, GinTonicPairing, Recipe
+  - Defined all enums: GinStyle (10), TonicStyle (10), FlavorTag (15), GarnishCategory (7), GlassType (4), IceType (5), PairingSource (3)
+  - Specified JSON seed format for gins, tonics, garnishes, pairings
+  - Designed full project folder structure
+  - Mapped all screens and navigation (TabView iPhone / NavigationSplitView macOS)
+  - Defined Windows v2 path: Flutter (shares JSON data format)
+  - Identified 4 open questions for user before Phase 4 (CloudKit, visual style, app name, community)
+- Files created:
+  - `Docs/DataModel.md` — complete Swift Data entity definitions + seed JSON format
+  - `Docs/Architecture.md` — tech stack, project structure, navigation, screen inventory
 
 ### Phase 3: Data Seeding Plan (pending)
 - **Status:** pending
@@ -55,11 +66,11 @@
 ## 5-Question Reboot Check
 | Question | Answer |
 |----------|--------|
-| Where am I? | Phase 2 — Data Model & Architecture Design |
-| Where am I going? | Phase 3 (Seeding), Phase 4 (Implementation), Phase 5 (Testing) |
+| Where am I? | Phase 3 — Data Seeding Plan |
+| Where am I going? | Phase 4 (Implementation), Phase 5 (Testing) |
 | What's the goal? | Cross-platform Gin & Tonic database app (iOS + macOS) with rich per-gin pairing data |
-| What have I learned? | No public API exists; best sources: The Gin Guide (315 gins garnish), brand sites (official serve); two big competitors exist; see findings.md |
-| What have I done? | Phase 1 complete. Source inventory, garnish taxonomy, differentiation strategy all in findings.md |
+| What have I learned? | Full data model designed; SwiftUI + Swift Data + CloudKit stack chosen; Pairing Matrix is key differentiator; see Docs/ |
+| What have I done? | Phase 1 + 2 complete. Docs/DataModel.md and Docs/Architecture.md created. |
 
 ---
 *Update after completing each phase or encountering errors*
