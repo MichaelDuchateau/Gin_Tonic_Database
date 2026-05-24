@@ -1,0 +1,137 @@
+[
+  {
+    "id": "t-ft-indian",
+    "name": "Premium Indian Tonic Water",
+    "brand": "Fever-Tree",
+    "style": "indian",
+    "flavorDescription": "Clean, crisp quinine bitterness with light citrus notes from natural spring water.",
+    "flavorTags": ["citrus", "earthy"],
+    "officialURL": "https://fever-tree.com"
+  },
+  {
+    "id": "t-ft-mediterranean",
+    "name": "Mediterranean Tonic Water",
+    "brand": "Fever-Tree",
+    "style": "mediterranean",
+    "flavorDescription": "Floral and aromatic with rosemary, thyme and citrus; lower quinine than Indian.",
+    "flavorTags": ["floral", "herbal", "citrus"],
+    "officialURL": "https://fever-tree.com"
+  },
+  {
+    "id": "t-ft-light",
+    "name": "Light Tonic Water",
+    "brand": "Fever-Tree",
+    "style": "light",
+    "flavorDescription": "Half the calories of the Indian tonic; clean and neutral, lets the gin shine.",
+    "flavorTags": ["citrus"],
+    "officialURL": "https://fever-tree.com"
+  },
+  {
+    "id": "t-ft-aromatic",
+    "name": "Aromatic Tonic Water",
+    "brand": "Fever-Tree",
+    "style": "aromatic",
+    "flavorDescription": "Warm aromatic spices including angostura bark; bold and complex.",
+    "flavorTags": ["spice", "earthy", "woody"],
+    "officialURL": "https://fever-tree.com"
+  },
+  {
+    "id": "t-ft-elderflower",
+    "name": "Elderflower Tonic Water",
+    "brand": "Fever-Tree",
+    "style": "elderflower",
+    "flavorDescription": "Delicate elderflower sweetness with a clean quinine backbone.",
+    "flavorTags": ["floral", "sweet"],
+    "officialURL": "https://fever-tree.com"
+  },
+  {
+    "id": "t-ft-cucumber",
+    "name": "Cucumber Tonic Water",
+    "brand": "Fever-Tree",
+    "style": "cucumber",
+    "flavorDescription": "Fresh cucumber with light citrus; pairs beautifully with floral and contemporary gins.",
+    "flavorTags": ["cucumber", "citrus"],
+    "officialURL": "https://fever-tree.com"
+  },
+  {
+    "id": "t-ft-citrus",
+    "name": "Citrus Tonic Water",
+    "brand": "Fever-Tree",
+    "style": "citrus",
+    "flavorDescription": "Zesty lemon and lime notes over a clean tonic base.",
+    "flavorTags": ["citrus"],
+    "officialURL": "https://fever-tree.com"
+  },
+  {
+    "id": "t-schweppes-classic",
+    "name": "Classic Tonic Water",
+    "brand": "Schweppes",
+    "style": "indian",
+    "flavorDescription": "The original tonic — sharper carbonation, pronounced quinine bitterness, classic G&T base.",
+    "flavorTags": ["earthy", "citrus"],
+    "officialURL": "https://www.schweppes.com"
+  },
+  {
+    "id": "t-fentimans-botanical",
+    "name": "Botanically Brewed Tonic Water",
+    "brand": "Fentimans",
+    "style": "indian",
+    "flavorDescription": "Naturally fermented with herbal botanicals; complex depth beyond standard tonics.",
+    "flavorTags": ["herbal", "earthy", "citrus"],
+    "officialURL": "https://www.fentimans.com"
+  },
+  {
+    "id": "t-eastimperial-yuzu",
+    "name": "Yuzu & Malabar Pepper Tonic",
+    "brand": "East Imperial",
+    "style": "citrus",
+    "flavorDescription": "Distinctive Japanese yuzu citrus with a warm pepper finish; excellent with Japanese gins.",
+    "flavorTags": ["citrus", "spice", "tropical"],
+    "officialURL": "https://eastimperial.com"
+  },
+  {
+    "id": "t-eastimperial-burma",
+    "name": "Burma Tonic Water",
+    "brand": "East Imperial",
+    "style": "aromatic",
+    "flavorDescription": "Made with Cinchona bark from Burma; intensely aromatic and full-bodied.",
+    "flavorTags": ["earthy", "spice", "woody"],
+    "officialURL": "https://eastimperial.com"
+  },
+  {
+    "id": "t-1724",
+    "name": "1724 Tonic Water",
+    "brand": "1724",
+    "style": "light",
+    "flavorDescription": "Sourced from the Andes at 1724m altitude; delicate minerality, light and elegant.",
+    "flavorTags": ["citrus", "earthy"],
+    "officialURL": "https://1724tonic.com"
+  },
+  {
+    "id": "t-artisan-cucumber",
+    "name": "Cucumber Tonic Water",
+    "brand": "Artisan Drinks",
+    "style": "cucumber",
+    "flavorDescription": "English garden cucumber; crisp and clean with a vegetal freshness.",
+    "flavorTags": ["cucumber", "herbal"],
+    "officialURL": "https://artisandrinkco.com"
+  },
+  {
+    "id": "t-thomas-henry",
+    "name": "Tonic Water",
+    "brand": "Thomas Henry",
+    "style": "indian",
+    "flavorDescription": "German premium tonic with fine bubbles and a balanced bittersweet profile.",
+    "flavorTags": ["citrus", "earthy"],
+    "officialURL": "https://www.thomas-henry.de"
+  },
+  {
+    "id": "t-franklin-sons-indian",
+    "name": "Natural Indian Tonic Water",
+    "brand": "Franklin & Sons",
+    "style": "indian",
+    "flavorDescription": "Light, crisp quinine bitterness with natural spring water; versatile pairing tonic.",
+    "flavorTags": ["citrus", "earthy"],
+    "officialURL": "https://www.franklinandsons.co.uk"
+  }
+]

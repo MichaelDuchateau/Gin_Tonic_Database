@@ -4,7 +4,7 @@
 Build a native cross-platform app (iOS + macOS, future Windows) where users can browse and enter Gin & Tonic recipes, including per-gin tonic pairings, garnish combinations, volumes, taste profiles, and links to official distillery sites.
 
 ## Current Phase
-Phase 3
+Phase 4
 
 ## Phases
 
@@ -37,11 +37,19 @@ Phase 3
 - Target: iOS 17 / macOS 14 (Sonoma) for Swift Data + @Observable support
 
 ### Phase 3: Data Seeding Plan
-- [ ] Identify which gins to seed initially (curated list)
-- [ ] Plan scraping or manual entry workflow
-- [ ] Define import format (JSON/CSV seed files)
-- [ ] Create sample data for at least 10 gins
-- **Status:** pending
+- [x] Identify which gins to seed initially — 15 curated gins chosen
+- [x] Define import format — 4 JSON seed files in `Seeds/`
+- [x] Create garnishes.json — 30 garnishes across 7 categories
+- [x] Create tonics.json — 15 tonics across 7 brands
+- [x] Create gins.json — 15 gins (London Dry, contemporary, Japanese, American, etc.)
+- [x] Create pairings.json — 30 pairings (gin × tonic × garnish × volumes × source)
+- **Status:** complete
+
+**Seed data stats:**
+- 15 gins · 15 tonics · 30 garnishes · 30 pairings
+- All pairings carry: ginVolumeMl, tonicVolumeMl, glassType, iceType, garnishIds[], notes, source
+- Sources split: distilleryRecommended and editorial
+- App name confirmed: **"The Gintastic Serve"**
 
 ### Phase 4: App Implementation
 - [ ] Scaffold SwiftUI project (multiplatform target: iOS + macOS)
@@ -76,9 +84,12 @@ Phase 3
 | iOS 17 / macOS 14 minimum | Required for Swift Data + @Observable; covers ~85%+ of active devices in 2026 |
 | @Observable over ObservableObject | Simpler syntax; no @Published boilerplate; better performance |
 | NavigationSplitView (Mac/iPad) + TabView (iPhone) | Adapts correctly to each form factor per Apple HIG |
-| CloudKit deferred to minor update | Reduces v1 complexity; entitlement + TestFlight overhead not worth it at start |
+| No CloudKit in v1 | User decision: keep v1 simple; local-only Swift Data store |
 | Flutter for Windows v2 | Best cross-platform option; shares JSON seed data format with SwiftUI app |
 | Pairing Matrix as key differentiator | No competitor app has an interactive gin × tonic grid; validates the app's unique value |
+| App name: "The Gintastic Serve" | User decision |
+| Visual style: clean/minimal | White/light backgrounds, botanical illustration accents, no dark lifestyle photography in v1 |
+| Community/sharing deferred to v2 | User decision; v1 is personal-collection only |
 | Defer Windows to v2 | SwiftUI does not run on Windows; Flutter or MAUI are viable but add complexity |
 
 ## Errors Encountered

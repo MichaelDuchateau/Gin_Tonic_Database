@@ -44,8 +44,19 @@
   - `Docs/DataModel.md` — complete Swift Data entity definitions + seed JSON format
   - `Docs/Architecture.md` — tech stack, project structure, navigation, screen inventory
 
-### Phase 3: Data Seeding Plan (pending)
-- **Status:** pending
+### Phase 3: Data Seeding Plan — COMPLETE (2026-05-24)
+- **Status:** complete
+- Actions taken:
+  - User confirmed: no CloudKit v1, clean/minimal style, app name "The Gintastic Serve", sharing in v2
+  - Created Seeds/garnishes.json — 30 garnishes (citrus, herb, spice, floral, vegetable, berry, other)
+  - Created Seeds/tonics.json — 15 tonics across 7 brands (Fever-Tree, Schweppes, Fentimans, East Imperial, 1724, Artisan Drinks, Thomas Henry, Franklin & Sons)
+  - Created Seeds/gins.json — 15 gins covering: London Dry (Tanqueray, Beefeater, Gordon's, Sipsmith), Contemporary (Hendrick's, Monkey 47, The Botanist, Bombay Sapphire, Cotswolds, Isle of Harris, Gin Mare, Malfy, Tanqueray 10), Japanese (Roku), American (Aviation)
+  - Created Seeds/pairings.json — 30 pairings with full serve data (volumes, glass, ice, garnishes, notes, source)
+- Files created:
+  - Seeds/garnishes.json
+  - Seeds/tonics.json
+  - Seeds/gins.json
+  - Seeds/pairings.json
 
 ### Phase 4: App Implementation (pending)
 - **Status:** pending
@@ -66,7 +77,7 @@
 ## 5-Question Reboot Check
 | Question | Answer |
 |----------|--------|
-| Where am I? | Phase 3 — Data Seeding Plan |
+| Where am I? | Phase 4 — App Implementation |
 | Where am I going? | Phase 4 (Implementation), Phase 5 (Testing) |
 | What's the goal? | Cross-platform Gin & Tonic database app (iOS + macOS) with rich per-gin pairing data |
 | What have I learned? | Full data model designed; SwiftUI + Swift Data + CloudKit stack chosen; Pairing Matrix is key differentiator; see Docs/ |
