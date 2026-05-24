@@ -19,13 +19,16 @@
   - findings.md (created)
   - progress.md (created)
 
-### Next Actions (Phase 1 continuation)
-- [ ] Web-fetch Difford's Guide to assess data structure and scraping viability
-- [ ] Web-fetch Gin Foundry to assess pairing content depth
-- [ ] Web-fetch Fever-Tree cocktail section for volume + garnish format
-- [ ] Check if TheCocktailDB API has G&T specific endpoints
-- [ ] Assess licensing / terms of service for key sources
-- [ ] Decide: manual data entry workflow vs. semi-automated scraping for seed data
+### Phase 1 — COMPLETE (2026-05-24)
+- [x] Fetched GINferno web app — proprietary API, no public access, 13K+ gins
+- [x] Fetched Ginventory — 6,500+ gins, distillery-recommended pairings, no public API
+- [x] Fetched The Gin Guide Garnish Guide — 315 gins A-Z, garnish per gin, HTML-parseable ✅
+- [x] Fetched gin.directory — hybrid editorial+database, volume standard confirmed 50ml:150ml
+- [x] Fetched Lyme Bay Winery — garnish taxonomy by gin style (no per-gin data)
+- [x] Fetched Fever-Tree — JS-rendered, not directly parseable; volume standard confirmed
+- [x] Searched for public APIs — none found for gin pairing data
+- [x] Identified two direct competitors (GINferno, Ginventory) and differentiation strategy
+- [x] Updated findings.md with full source inventory, garnish taxonomy, differentiation matrix
 
 ### Phase 2: Data Model & Architecture (pending)
 - **Status:** pending
@@ -52,11 +55,11 @@
 ## 5-Question Reboot Check
 | Question | Answer |
 |----------|--------|
-| Where am I? | Phase 1 — Research & Source Discovery |
-| Where am I going? | Phase 2 (Data Model), Phase 3 (Seeding), Phase 4 (Implementation), Phase 5 (Testing) |
+| Where am I? | Phase 2 — Data Model & Architecture Design |
+| Where am I going? | Phase 3 (Seeding), Phase 4 (Implementation), Phase 5 (Testing) |
 | What's the goal? | Cross-platform Gin & Tonic database app (iOS + macOS) with rich per-gin pairing data |
-| What have I learned? | Sources mapped: Difford's, Gin Foundry, Fever-Tree are the top 3; see findings.md |
-| What have I done? | Created all 3 planning files; source landscape documented |
+| What have I learned? | No public API exists; best sources: The Gin Guide (315 gins garnish), brand sites (official serve); two big competitors exist; see findings.md |
+| What have I done? | Phase 1 complete. Source inventory, garnish taxonomy, differentiation strategy all in findings.md |
 
 ---
 *Update after completing each phase or encountering errors*

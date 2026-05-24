@@ -4,16 +4,23 @@
 Build a native cross-platform app (iOS + macOS, future Windows) where users can browse and enter Gin & Tonic recipes, including per-gin tonic pairings, garnish combinations, volumes, taste profiles, and links to official distillery sites.
 
 ## Current Phase
-Phase 1
+Phase 2
 
 ## Phases
 
 ### Phase 1: Research & Source Discovery
 - [x] Define app requirements and data model
-- [ ] Identify existing databases/sources covering gin tonic pairings, garnishes, taste profiles
-- [ ] Evaluate licensing/scraping viability for each source
-- [ ] Document all findings in findings.md
-- **Status:** in_progress
+- [x] Identify existing databases/sources covering gin tonic pairings, garnishes, taste profiles
+- [x] Evaluate licensing/scraping viability for each source
+- [x] Document all findings in findings.md
+- **Status:** complete
+
+**Key Phase 1 Outcomes:**
+- Two direct competitor apps found: GINferno (13K gins) and Ginventory (6.5K gins) — neither has a public API
+- Best seed data source: The Gin Guide Garnish Guide (315 gins, HTML-parseable)
+- Volume standard: 50ml gin : 150ml tonic (Fever-Tree / industry)
+- No public structured API exists for gin pairing data — manual curation required for seed data
+- Differentiation: macOS-native, curated quality, user-editable personal pairings, interactive pairing matrix
 
 ### Phase 2: Data Model & Architecture Design
 - [ ] Define the core data schema (Gin, Tonic, Garnish, Pairing, Recipe)

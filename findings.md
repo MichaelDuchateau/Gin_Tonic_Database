@@ -15,58 +15,92 @@
 - **User input:** CRUD for recipes; possibly community or personal notes on pairings
 - **Research goal for Phase 1:** Identify existing web sources, apps, or databases that already document gin × tonic × garnish pairings so we can assess data availability
 
-## Research Findings — Sources to Investigate
+## Research Findings — Sources Investigated (Phase 1)
 
-### Priority Tier 1 — Dedicated Gin Databases / Apps
-| Source | URL | Coverage | Notes |
-|--------|-----|----------|-------|
-| Flaviar | https://flaviar.com | Spirits database, taste notes, distillery info | Strong taste profiles; tonic pairing unclear |
-| Difford's Guide | https://www.diffordsguide.com/gin | Gin reviews, cocktail recipes, taste notes | Very strong — includes botanicals, taste profile, cocktail ratios |
-| Gin Foundry | https://www.ginfoundry.com | UK-focused gin reviews, tasting notes, garnish tips | Excellent garnish + tonic pairing content |
-| Master of Malt | https://www.masterofmalt.com | Spirits retail + tasting notes | Good taste profiles; less pairing-specific |
-| The Gin Guide | https://www.thegineguide.com | Gin reviews + G&T recommendations | Dedicated G&T format; may include tonic + garnish |
-| Gin Monkey | https://ginmonkey.co.uk | Independent gin blog + reviews | Good narrative pairing content |
-| Gin Magazine | https://ginmagazine.co.uk | Editorial gin coverage | Less structured data |
+### MAJOR FINDING: Direct Competitor Apps Already Exist
 
-### Priority Tier 2 — Tonic Brand Resources
-| Source | URL | Coverage | Notes |
-|--------|-----|----------|-------|
-| Fever-Tree | https://fever-tree.com/en_GB/cocktails | Recipes with gin + tonic pairings, garnishes, volumes | **Gold standard** — official volumes (50ml gin : 150ml tonic), garnish per gin |
-| Schweppes | https://www.schweppes.com | Classic G&T references | Less granular |
-| Fentimans | https://fentimans.com | Tonic water range with pairing suggestions | Some gin × tonic pairings |
-| East Imperial | https://eastimperial.com | Premium tonic; pairing guides | Good pairing notes per tonic variety |
-| 1724 Tonic | https://1724tonic.com | Patagonian tonic; brand pairing recs | Some structured pairing content |
-| Artisan Drinks | https://artisandrinkco.com | Tonic range + pairing guides | — |
+| App | Scale | Public API | Key Data |
+|-----|-------|-----------|----------|
+| **GINferno** (iOS + Android) | 13,000+ gins, 1,200 mixers, 130,000 recipes | ❌ Proprietary | Gin × tonic × garnish pairings, "perfect serves", ratings. Internal CDN at `web.ginferno.app/api/cdn/`. [App Store](https://apps.apple.com/us/app/ginferno-perfect-gin-tonic/id1511467045) |
+| **Ginventory** (iOS + Android) | 6,500+ gins | ❌ No public API | Distillery-recommended pairings, tonic + garnish per gin, most-downloaded gin app globally. [ginventory.co](https://www.ginventory.co/en) |
 
-### Priority Tier 3 — Gin Brand Official Sites (sample)
-| Gin | Official URL | Expected Data |
-|-----|-------------|---------------|
-| Hendrick's | https://www.hendricksgin.com | Signature serve: cucumber garnish, specific tonic, volumes |
-| Tanqueray | https://www.tanqueray.com | Serve recommendations |
-| Monkey 47 | https://www.monkey47.com | Complex botanical profile, serve suggestions |
-| The Botanist | https://www.thebotanist.com | Islay botanical profile, serve suggestions |
-| Beefeater | https://www.beefeatersgin.com | Classic London Dry serve |
-| Roku | https://www.beamsuntory.com/brands/roku-gin | Japanese botanical profile |
-| Bombay Sapphire | https://www.bombaysapphire.com | Serve, garnish |
-| Aviation | https://aviationgin.com | Modern American gin serves |
+**Implication:** Both apps are well-established. Our app must differentiate — see Differentiation section below.
+
+### Priority Tier 1 — Best Data Sources (Verified)
+
+| Source | URL | Fields Covered | Scraped/Usable? |
+|--------|-----|---------------|-----------------|
+| **The Gin Guide** | https://www.theginguide.com | 315+ gins: garnish (1-3 options per gin), tasting notes, botanicals, style, ABV, price. Dedicated [Garnish Guide](https://www.theginguide.com/gin-garnish-guide.html) | ✅ HTML parseable; garnish per gin A-Z |
+| **Gin Foundry** | https://www.ginfoundry.com | Published "a little book on gins, tonics & garnishes" (47 gins, £4.95). G&T recipe pages exist per gin. | ✅ Individual recipe pages (e.g. `/gin/gin-sul/gin-sul-tonic-web/`) |
+| **Difford's Guide** | https://www.diffordsguide.com | Encyclopaedic gin entries; taste profile, botanicals, ABV, cocktail ratios. Strong editorial depth. | ⚠️ 404 on some paths; login may be required for full data |
+| **gin.directory** | https://www.gin.directory | Hybrid editorial + database. Gin filtering by type (London Dry, Navy, etc.), comparison tools, price tracking, community tasting journals. Volume standard cited: 50ml gin : 150ml tonic | ✅ Web-accessible |
+
+### Priority Tier 2 — Tonic Brand Resources (Verified)
+
+| Source | URL | Coverage | Usability |
+|--------|-----|----------|-----------|
+| **Fever-Tree** | https://fever-tree.com | Sets the volume standard: **50ml gin : 150ml tonic** (1:3). Cocktails section exists but gin-specific pages require navigation. | ⚠️ Content JS-rendered, not directly parseable |
+| Fentimans | https://fentimans.com | Tonic range + pairing suggestions | Editorial only |
+| East Imperial | https://eastimperial.com | Pairing notes per tonic variety | Editorial only |
+
+### Priority Tier 3 — Gin Brand Official Sites
+
+Each official site is the authoritative source for "perfect serve" data for that gin. Manual curation required.
+
+| Gin | Official URL | Confirmed Serve Data |
+|-----|-------------|----------------------|
+| Hendrick's | https://www.hendricksgin.com | Cucumber garnish, serves confirmed |
+| Tanqueray | https://www.tanqueray.com | Classic serve |
+| Monkey 47 | https://www.monkey47.com | 47 botanicals, complex profile |
+| The Botanist | https://www.thebotanist.com | Islay botanicals |
+| Beefeater | https://www.beefeatersgin.com | London Dry classic |
+| Roku | https://www.suntory.com/brands/roku/ | Japanese botanicals (sakura, yuzu, etc.) |
+| Bombay Sapphire | https://www.bombaysapphire.com | Serve + garnish |
 
 ### Priority Tier 4 — Structured Data / APIs
+
 | Source | URL | Notes |
 |--------|-----|-------|
-| Open Food Facts | https://world.openfoodfacts.org | May have some spirits entries; inconsistent |
-| TheCocktailDB | https://www.thecocktaildb.com | Cocktail API — gin cocktails but not G&T specific pairing data |
-| Untappd equivalent for spirits? | — | No clear equivalent found yet |
+| TheCocktailDB | https://www.thecocktaildb.com/api.php | Gin cocktails but **no G&T-specific pairing data**. Not suitable for our use case. |
+| Open Food Facts | https://world.openfoodfacts.org | Inconsistent spirits data. Not suitable. |
 
-## Key Data Fields — Availability Assessment
-| Field | Best Source |
-|-------|-------------|
-| Taste profile / botanicals | Difford's Guide, Gin Foundry, Flaviar |
-| Recommended tonic | Fever-Tree, Gin Foundry, The Gin Guide |
-| Garnish recommendation | Fever-Tree, Gin Foundry, official brand sites |
-| Volumes (gin ml : tonic ml) | Fever-Tree (50:150 standard), brand sites |
-| Official site URL | Curated manually per gin |
-| ABV | Master of Malt, Difford's |
-| Bottle image | Brand sites, Master of Malt |
+### Garnish Pattern Taxonomy (from research)
+
+Based on cross-source analysis, garnishes map to gin style:
+
+| Gin Style | Common Garnish | Common Tonic |
+|-----------|---------------|-------------|
+| London Dry | Lemon slice or wedge | Standard / Indian |
+| Contemporary / floral | Edible flowers, elderflower | Light / elderflower |
+| Cucumber-noted (Hendrick's) | Cucumber ribbon or slice | Light / cucumber |
+| Citrus-forward | Grapefruit slice, orange wheel | Mediterranean / citrus |
+| Herbal | Rosemary sprig, thyme | Mediterranean |
+| Spice-forward | Pink peppercorns, star anise, cinnamon | Aromatic / spiced |
+| Japanese | Yuzu peel, shiso leaf, green tea | Light / neutral |
+| Navy Strength | Lemon, juniper berries | Full-flavour Indian |
+
+## Key Data Fields — Availability Assessment (Updated)
+| Field | Best Source | Availability |
+|-------|-------------|-------------|
+| Taste profile / botanicals | Difford's Guide, The Gin Guide, Gin Foundry | ✅ Web + editorial |
+| Recommended tonic (brand) | Ginventory (distillery-endorsed), Fever-Tree | ⚠️ App-locked or editorial |
+| Garnish recommendation | The Gin Guide Garnish Guide (315 gins A-Z) | ✅ Web-parseable |
+| Volumes (gin ml : tonic ml) | Fever-Tree standard: **50ml : 150ml** | ✅ Industry standard |
+| Official distillery URL | Manual curation per gin | ✅ Always available |
+| ABV | The Gin Guide, Difford's | ✅ Web |
+| Bottle image | Brand sites, Difford's | ✅ Per brand |
+| Style classification | gin.directory, The Gin Guide | ✅ Web |
+
+## Differentiation Strategy vs. GINferno / Ginventory
+| Dimension | GINferno / Ginventory | Our App |
+|-----------|-----------------------|---------|
+| Platform | iOS + Android (cross-platform native) | iOS + macOS native (SwiftUI), Windows v2 |
+| Scale | 6,500–13,000 gins | Curated quality-first (start 50–200 gins) |
+| Data entry | Proprietary / closed | User-editable, personal collection |
+| Cross-pairing UI | Recipe suggestions | Interactive **pairing matrix** (gin × tonic) |
+| Mac experience | No dedicated macOS app | First-class macOS app via SwiftUI |
+| Personal recipes | Limited | Core feature — save your own G&T recipes |
+| Official links | Unknown | Verified official distillery URL per gin |
 
 ## Technical Decisions
 | Decision | Rationale |
