@@ -25,7 +25,7 @@ The central entity. Represents a single gin product.
 ```swift
 @Model
 final class Gin {
-    var id: UUID
+    @Attribute(.unique) var id: UUID
     var name: String                    // "Hendrick's Gin"
     var distillery: String              // "William Grant & Sons"
     var country: String                 // "Scotland"
@@ -39,17 +39,42 @@ final class Gin {
     var flavorTags: [FlavorTag]         // [.floral, .cucumber, .citrus]
     var officialURL: String?            // "https://www.hendricksgin.com"
     var bottleImageURL: String?
-    var isUserAdded: Bool               // false = seeded/curated, true = user-created
+    var cabinetStatus: CabinetStatus    // .own | .had | .wishlist  ← replaces isUserAdded
+    var dateAdded: Date                 // when user added to cabinet
+    var dateAcquired: Date?             // when user bought/received the bottle (optional)
     var userNotes: String?
     var userRating: Int?                // 1–5, nil = unrated
-    var createdAt: Date
     var updatedAt: Date
+    var seedId: String?                 // links back to seed JSON id for auto-fill matching
 
     // Relationships
     @Relationship(deleteRule: .cascade)
     var pairings: [GinTonicPairing] = []
+
+    @Relationship(deleteRule: .cascade)
+    var recipes: [Recipe] = []
 }
 ```
+
+### CabinetStatus enum
+
+```swift
+enum CabinetStatus: String, Codable, CaseIterable {
+    case own      = "Own"       // user currently owns a bottle — green tag
+    case had      = "Had"       // user has finished/tasted it — grey tag
+    case wishlist = "Wishlist"  // user wants to try it — amber tag
+}
+```
+
+**Status transitions:**
+| From | Action | To |
+|------|--------|----|
+| `.wishlist` | "I bought it" | `.own` |
+| `.own` | "I finished it" | `.had` |
+| `.had` | "Add again" | `.wishlist` |
+
+The transition button appears on `GinDetailView` using `cabinetStatus.nextStatus`.  
+`dateAcquired` is set (to now) when transitioning into `.own`.
 
 ### GinStyle enum
 ```swift
@@ -247,11 +272,28 @@ final class Recipe {
 
 ---
 
-## Seed Data Format (JSON)
+## Seed Data — Reference Layer Only
 
-All seed files live in `App/Resources/Seeds/`.
+Seed JSON files are **never imported into Swift Data**. They serve as an in-memory lookup catalogue:
 
-### gins.json
+- `SeedDataService` loads all four JSON files into memory at app launch (using `Codable` structs, not `@Model`).
+- When a user adds a gin via the **Discover** tab, the app pre-fills the editor from the matching `SeedGin`.
+- A `seedId: String?` on the `Gin` model tracks which seed entry it was populated from.
+- No `SeedDataService` method ever calls `modelContext.insert(...)`.
+
+```
+Seeds/gins.json  ──► SeedDataService (in-memory [SeedGin])
+                            │
+                     Discover search
+                            │
+                     User taps "Add to Cabinet"
+                            │
+                     GinEditorView (pre-filled)
+                            │
+                     modelContext.insert(Gin(...))  ← only write to Swift Data
+```
+
+### gins.json (reference format)
 ```json
 [
   {

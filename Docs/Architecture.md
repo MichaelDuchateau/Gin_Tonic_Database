@@ -16,42 +16,51 @@
 ## Project Structure
 
 ```
-GinTonicDatabase/
+GintasticServe/
 ├── App/
-│   ├── GinTonicDatabaseApp.swift      # @main entry point, ModelContainer setup
-│   ├── ContentView.swift              # Root NavigationSplitView / TabView
+│   ├── GintasticServeApp.swift        # @main, ModelContainer + SeedDataService setup
+│   ├── ContentView.swift              # Root: TabView (iPhone) / NavigationSplitView (Mac/iPad)
 │   └── Resources/
-│       └── Seeds/
+│       └── Seeds/                     # Bundled JSON — reference only, never written to Swift Data
 │           ├── gins.json
 │           ├── tonics.json
 │           ├── garnishes.json
 │           └── pairings.json
 ├── Models/
-│   ├── Gin.swift
-│   ├── Tonic.swift
-│   ├── Garnish.swift
-│   ├── GinTonicPairing.swift
-│   ├── Recipe.swift
-│   └── Enums/
-│       ├── GinStyle.swift
-│       ├── TonicStyle.swift
-│       ├── GarnishCategory.swift
-│       ├── FlavorTag.swift
-│       ├── GlassType.swift
-│       ├── IceType.swift
-│       └── PairingSource.swift
+│   ├── Gin.swift                      # @Model — cabinetStatus, dateAdded, dateAcquired, seedId
+│   ├── Tonic.swift                    # @Model
+│   ├── Garnish.swift                  # @Model
+│   ├── GinTonicPairing.swift          # @Model — join with volumes, glass, ice, garnishes
+│   ├── Recipe.swift                   # @Model — user's named G&T creations
+│   ├── Enums/
+│   │   ├── CabinetStatus.swift        # .own (green) | .had (grey) | .wishlist (amber)
+│   │   ├── GinStyle.swift
+│   │   ├── TonicStyle.swift
+│   │   ├── GarnishCategory.swift
+│   │   ├── FlavorTag.swift
+│   │   ├── GlassType.swift
+│   │   ├── IceType.swift
+│   │   └── PairingSource.swift
+│   └── Seed/                          # Codable structs for in-memory seed lookup (NOT @Model)
+│       ├── SeedGin.swift
+│       ├── SeedTonic.swift
+│       ├── SeedGarnish.swift
+│       └── SeedPairing.swift
 ├── Views/
-│   ├── Gin/
-│   │   ├── GinListView.swift
+│   ├── Cabinet/                       # My Cabinet tab — user's gins by status
+│   │   ├── CabinetView.swift          # Segmented: Own / Had / Wishlist
 │   │   ├── GinRowView.swift
-│   │   ├── GinDetailView.swift
-│   │   ├── GinEditorView.swift
+│   │   ├── GinDetailView.swift        # Full detail + status transition button
+│   │   ├── GinEditorView.swift        # Add / edit gin (pre-filled from seed)
 │   │   └── TasteProfileView.swift
+│   ├── Discover/                      # Discover tab — seed lookup → web fallback
+│   │   ├── DiscoverView.swift         # Search bar → SeedDataService → results list
+│   │   └── SeedGinPreviewView.swift   # Preview before "Add to Cabinet"
 │   ├── Tonic/
 │   │   ├── TonicListView.swift
 │   │   └── TonicDetailView.swift
 │   ├── Pairing/
-│   │   ├── PairingMatrixView.swift    # The key differentiator: gin × tonic grid
+│   │   ├── PairingMatrixView.swift    # gin × tonic grid — .own gins only
 │   │   ├── PairingDetailView.swift
 │   │   └── PairingEditorView.swift
 │   ├── Recipe/
@@ -60,30 +69,38 @@ GinTonicDatabase/
 │   │   └── RecipeEditorView.swift
 │   ├── Garnish/
 │   │   └── GarnishPickerView.swift
+│   ├── Settings/
+│   │   └── SettingsView.swift
 │   └── Shared/
-│       ├── RatingView.swift           # Star rating component
+│       ├── CabinetStatusBadge.swift   # Coloured status tag chip
+│       ├── RatingView.swift           # 1–5 star rating
 │       ├── FlavorTagView.swift        # Flavor tag chips
-│       ├── VolumeSliderView.swift     # Gin/tonic volume pickers
+│       ├── VolumeControlView.swift    # Gin / tonic ml steppers
 │       └── EmptyStateView.swift
 ├── ViewModels/
-│   ├── GinListViewModel.swift
-│   ├── PairingMatrixViewModel.swift
+│   ├── CabinetViewModel.swift         # Filters gins by CabinetStatus
+│   ├── DiscoverViewModel.swift        # Queries SeedDataService; handles "Add to Cabinet"
+│   ├── PairingMatrixViewModel.swift   # Builds gin × tonic matrix from .own gins
 │   └── RecipeEditorViewModel.swift
-├── Services/
-│   ├── SeedDataService.swift          # Parses JSON, inserts into Swift Data on first launch
-│   └── ModelContainerFactory.swift    # Builds ModelContainer (local or CloudKit)
-└── Docs/                              # Planning and reference (this folder)
+└── Services/
+    ├── SeedDataService.swift          # @Observable — loads JSON in-memory; NO Swift Data writes
+    └── ModelContainerFactory.swift    # Local-only ModelContainer (no CloudKit in v1)
 ```
 
 ## Data Flow
 
 ```
-JSON seed files
-      │
-      ▼  (first launch only)
-SeedDataService ──► Swift Data store (local SQLite)
+Seeds/gins.json ──► SeedDataService (in-memory [SeedGin])   ← NEVER writes to Swift Data
                            │
-                    CloudKit sync ◄──── iCloud account (optional)
+                    DiscoverViewModel.search(query:)
+                           │
+                    User taps "Add to Cabinet"
+                           │
+                    GinEditorView (pre-filled from SeedGin)
+                           │
+                    modelContext.insert(Gin(...))
+                           │
+                    Swift Data store (local SQLite)
                            │
                     @Query / @Environment(\.modelContext)
                            │
@@ -97,10 +114,14 @@ SeedDataService ──► Swift Data store (local SQLite)
 ### iPhone (compact width)
 ```
 TabView
-├── 🍸 Gins tab       → NavigationStack → GinListView → GinDetailView → PairingDetailView
-├── 🫧 Tonics tab     → NavigationStack → TonicListView → TonicDetailView
-├── 🔀 Pairings tab   → NavigationStack → PairingMatrixView → PairingDetailView
-├── 📋 My Recipes tab → NavigationStack → RecipeListView → RecipeDetailView
+├── 🗄 My Cabinet tab  → NavigationStack → CabinetView (Own/Had/Wishlist segments)
+│                                        → GinDetailView → PairingDetailView
+├── 🔍 Discover tab    → NavigationStack → DiscoverView (search seed + web fallback)
+│                                        → SeedGinPreviewView → GinEditorView
+├── 🫧 Tonics tab      → NavigationStack → TonicListView → TonicDetailView
+├── 🔀 Pairings tab    → NavigationStack → PairingMatrixView (.own gins only)
+│                                        → PairingDetailView / PairingEditorView
+├── 📋 My Recipes tab  → NavigationStack → RecipeListView → RecipeDetailView
 └── ⚙️ Settings tab
 ```
 
@@ -108,7 +129,11 @@ TabView
 ```
 NavigationSplitView
 ├── Sidebar
-│   ├── Gins
+│   ├── My Cabinet
+│   │   ├── Own  (n)          ← count badge
+│   │   ├── Had  (n)
+│   │   └── Wishlist  (n)
+│   ├── Discover
 │   ├── Tonics
 │   ├── Pairing Matrix
 │   ├── My Recipes
@@ -119,11 +144,19 @@ NavigationSplitView
 
 ## Screen Inventory
 
-### Gin Browser
-- Filter bar: style, country, flavor tags, user-added / curated
-- Sort: A–Z, ABV, country, rating
-- Grid (macOS) / list (iPhone) layout
-- Search bar (name, distillery, botanical)
+### My Cabinet
+- Segmented control: Own / Had / Wishlist (with counts)
+- List of gins matching current segment, sorted A–Z (default) or by dateAdded
+- Each row: name, distillery, country, ABV, CabinetStatusBadge, star rating
+- Swipe actions: transition status, delete
+- Toolbar: + button → GinEditorView (blank), search icon
+
+### Discover
+- Search bar: queries SeedDataService in-memory by name/distillery/botanical
+- Results list: SeedGin rows (not yet in cabinet)
+- Tap row → SeedGinPreviewView (read-only seed data: taste profile, botanicals, pairings)
+- "Add to Cabinet" sheet → status picker (.wishlist or .own) → GinEditorView pre-filled
+- Empty state when no seed match: "Search the web" fallback (v2)
 
 ### Gin Detail
 - Hero: bottle image (if available), name, distillery, country, ABV badge, style tag
@@ -164,12 +197,21 @@ NavigationSplitView
 - Preparation notes
 - Rating
 
-## CloudKit Sync Strategy
+## Storage Strategy — v1
 
-- `ModelConfiguration` with `.cloudKitDatabase(.private)` for user data
-- Seed / curated data is **read-only** and not synced (local only, re-seeded from bundle if needed)
-- User-created gins, pairings, recipes, and ratings sync via CloudKit private database
-- No CloudKit entitlement needed for v1 if sync is deferred; add it in a minor update
+v1 uses a **local-only** Swift Data store. No iCloud entitlement, no CloudKit container.
+
+```swift
+// ModelContainerFactory.swift
+static func makeContainer() throws -> ModelContainer {
+    let config = ModelConfiguration(isStoredInMemoryOnly: false)
+    return try ModelContainer(for: Gin.self, Tonic.self, Garnish.self,
+                              GinTonicPairing.self, Recipe.self,
+                              configurations: config)
+}
+```
+
+CloudKit sync is a planned v1.x update: swap `ModelConfiguration` for one with `.cloudKitDatabase(.private)` and add the iCloud entitlement — no model changes required.
 
 ## Windows v2 Path
 

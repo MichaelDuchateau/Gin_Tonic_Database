@@ -4,7 +4,7 @@
 Build a native cross-platform app (iOS + macOS, future Windows) where users can browse and enter Gin & Tonic recipes, including per-gin tonic pairings, garnish combinations, volumes, taste profiles, and links to official distillery sites.
 
 ## Current Phase
-Phase 4
+Phase 5
 
 ## Phases
 
@@ -52,13 +52,26 @@ Phase 4
 - App name confirmed: **"The Gintastic Serve"**
 
 ### Phase 4: App Implementation
-- [ ] Scaffold SwiftUI project (multiplatform target: iOS + macOS)
-- [ ] Implement data layer (Swift Data models)
-- [ ] Build browse/search screens
-- [ ] Build gin detail screen (taste profile, pairings, garnishes, volumes, official link)
-- [ ] Build recipe entry / cross-pairing editor
-- [ ] Basic CloudKit sync (optional v1)
-- **Status:** pending
+- [x] Apply DataModel.md changes (CabinetStatus, dateAdded, dateAcquired, seedId; remove isUserAdded/createdAt from Gin)
+- [x] Apply Architecture.md changes (My Cabinet tab, Discover tab, SeedDataService as in-memory only, macOS sidebar sub-items)
+- [x] Scaffold full GintasticServe/ source tree (47 Swift files across Models, Views, ViewModels, Services)
+- [x] All enums (8): CabinetStatus, GinStyle, TonicStyle, FlavorTag, GarnishCategory, GlassType, IceType, PairingSource
+- [x] All @Model entities (5): Gin, Tonic, Garnish, GinTonicPairing, Recipe
+- [x] Seed Codable structs (4): SeedGin, SeedTonic, SeedGarnish, SeedPairing
+- [x] SeedDataService — in-memory only, never writes to Swift Data
+- [x] ModelContainerFactory — local-only v1, preview variant for tests
+- [x] App entry point + ContentView (TabView iPhone / NavigationSplitView Mac+iPad with count badges)
+- [x] All 4 ViewModels: CabinetViewModel, DiscoverViewModel, PairingMatrixViewModel, RecipeEditorViewModel
+- [x] All views: Cabinet (4), Discover (2), Tonic (2), Pairing (3), Recipe (3), Garnish (1), Settings (1), Shared (5)
+- [x] Docs/XcodeSetup.md — step-by-step guide to create Xcode project and wire files
+- **Status:** complete
+
+**Key Phase 4 decisions applied:**
+- CabinetStatus (.own/.had/.wishlist) replaces isUserAdded bool
+- Seed JSON = in-memory reference catalogue only — zero Swift Data writes
+- Discover tab: seed lookup → SeedGinPreviewView → GinEditorView (pre-filled) → modelContext.insert
+- PairingMatrix only shows .own gins
+- macOS sidebar: My Cabinet with Own/Had/Wishlist sub-items + live count badges
 
 ### Phase 5: Testing & Delivery
 - [ ] Test on iOS Simulator and macOS
